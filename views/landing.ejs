@@ -1,0 +1,15 @@
+<%- include('header'); %>
+<body>
+  <h3>Landing</h3>
+  <p>
+    Use the below form to select a target website and keyword to analyze.
+  </p>
+  <p>
+    <form method="POST" action="/landing">
+      <input name='url' type="text" placeholder="URL" />
+      <input name='keyword' type="text" placeholder="Keyword" />
+      <input type="submit" />
+    </form>
+  </p>
+</body>
+<%- include('footer'); %>

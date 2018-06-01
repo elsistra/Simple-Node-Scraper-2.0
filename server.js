@@ -37,6 +37,7 @@ mongodb.connect(url, function(err, client) {
   require('./routes/register')(app);
   require('./routes/log-in')(app);
   require('./routes/admin')(app);
+  require('./routes/landing')(app);
 
   // REAL TIME SERVER EMITS AND LISTENERS HERE -------------------------------------------------------------
   realtimeServer.on('connect', function (socket) {

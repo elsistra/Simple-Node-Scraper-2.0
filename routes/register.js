@@ -41,7 +41,7 @@ module.exports = function (app) {
           const usersList = await users.find().toArray();
           realtimeServer.emit('users-list', usersList);
           //Send the user back to the page they were on
-          res.redirect('/')
+          res.redirect('/landing')
         }else{
           //User already exists
           console.log('User already exists');
