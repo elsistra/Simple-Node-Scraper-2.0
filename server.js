@@ -19,10 +19,11 @@ mongodb.connect(url, function(err, client) {
   // MongoDB includes a ObjectID property
   const ObjectId = mongodb.ObjectId;
   // Specify the Database name for MongoDB
-  const db = client.db('rtns');
+  const db = client.db('sns2');
   app.set('db', db);
   // Specify the collection inside the database we will be working with
   const users = db.collection("users");
+  const searches = db.collection("searches");
   // Settup sessions
   app.use(session({
     secret: 'keyboard cat',
@@ -41,13 +42,20 @@ mongodb.connect(url, function(err, client) {
 
   // REAL TIME SERVER EMITS AND LISTENERS HERE -------------------------------------------------------------
   realtimeServer.on('connect', function (socket) {
-    // A client has connected to the realtime server.
     socket.on('want-users-list', async function () {
-      // This client is asking for users list data. Ok.
       const usersList = await users.find().toArray();
       socket.emit('users-list', usersList);
     });
   });
+  realtimeServer.on('connect', function (socket) {
+    socket.on('want-searches-list', async function () {
+      const searchesList = await searches.find().toArray();
+      socket.emit('searches-list', searchesList);
+    });
+  });
+
+
+
 
 //Start the server
   httpServer.listen(8080, function () {

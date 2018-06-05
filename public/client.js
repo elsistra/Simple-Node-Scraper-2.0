@@ -14,3 +14,17 @@ socket.on('users-list', function (usersArray) {
     listElement.appendChild(newElement);
   });
 });
+
+// Ask server for searches data
+socket.emit('want-searches-list');
+
+// Listen for users array replacement from server.
+socket.on('searches-list', function (searchesArray) {
+  var listElement = document.getElementById('searchesList');
+  // For each user in Users array...
+  searchesArray.forEach((search) => {
+    const newElement = document.createElement('li');
+    newElement.textContent = search.keyword;
+    listElement.appendChild(newElement);
+  });
+});

@@ -1,11 +1,11 @@
-# Minimal Site Code ReadMe
+# Simple Node Scraper 2.0
 ---
 
 ## Introduction
-This app is made to be used as a template from which real time applications can
-be created. Users who wish to begin development on their node.js app immediately
-without a need to perform basic site setup will find this tool useful.
+A simple web-scraper with a browser based GUI and basic user registration and login system using a node.js server, and various npm libraries.
 
+After the user enters in a url and keyword, the script will automatically generate a table to store
+the data.
 ## Required Dependencies
 - [MongoDB 3.4.10](https://www.mongodb.com/download-center#community)
 - [NodeJS](https://nodejs.org/en/download/)

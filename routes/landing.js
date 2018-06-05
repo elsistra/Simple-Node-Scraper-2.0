@@ -10,43 +10,39 @@ const httpServer = http.createServer(app);
 const realtimeServer = io(httpServer);
 
 module.exports = function (app) {
-  const db = app.get('db');
-  const users = db.collection("users");
+  const db = app.get('db'); // Select the Database
+  const searches = db.collection("searches"); // Select searches collection
 
-  // Render the register page on request
-  app.get('/landing', (req, res) => {
-    // Send along Session Data
+  app.get('/landing', (req, res) => { // Render the register page on request
     res.render('landing', { session: req.session });
   });
 
   // When the Landing form is posted, this function will run
   app.post('/landing', urlencodedBodyParser, async(req, res) =>{
-    // Get the POST content from the form
-    let url = req.body.url;
+    let url = req.body.url; // Get POST content from the form
     let keyword = req.body.keyword;
 
-    // Ensure no fields are empty
+    // Ensurefields are not empty
     if (!url || !keyword) {
       console.log('A field was left empty');
       console.log('Keyword: ' + keyword);
       console.log('Url: ' + url);
     }else{
       console.log('Executing Search');
-
       https.get('https://www.' + url, (res) => {
       res.setEncoding('utf8');
       let rawData = '';
-
       res.on('data', (chunk) => {
         rawData += chunk;
       });
 
-      res.on('end', () => {
+      res.on('end', async () => {
       	const regExp = new RegExp(keyword, "ig");
       	const matches = rawData.match(regExp);
 
       	if (matches) {
-      	  console.log('Found ' + matches.length + ' occurrences of string: ' + keyword);
+      	  console.log('Found ' + matches.length + ' occurrences of string: ' + keyword + ' for user: ' + req.session.username);
+          const result = await searches.insert({url: url, keyword: keyword, user: req.session.username});
       	} else {
       	  console.log('String not found.');
       	}
