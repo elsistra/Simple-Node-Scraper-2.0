@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         // For each user in Users array...
         searchesArray.forEach((search) => {
           const newElement = document.createElement('li');
-          newElement.textContent = search.keyword;
+          newElement.textContent = search.keyword + ' ' + search.url + ' ' + search.matches + ' ' + search.date;
           listElement.appendChild(newElement);
         });
       }
